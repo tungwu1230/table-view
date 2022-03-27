@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}{{ filename }}Table View{% endblock %}
+
+{% block style %}
+<style>
+    .overflow-scroll::-webkit-scrollbar {
+        display: none;
+    }
+
+    .overflow-scroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    table {
+        width: 100%;
+        margin: 0 auto;
+    }
+    table, th, td {
+        border-collapse: collapse;
+        border: 1px solid #ccc;
+    }
+    th {
+        padding: .75rem;
+        white-space: nowrap;
+        text-align: left;
+    }
+    td {
+        padding: 1rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 200px;
+        text-align: left;
+    }
+</style>
+{% endblock %}
+
+
+{% block main %}
+
+<main class="py-3 d-flex flex-grow-1">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h3>資料預覽</h3>
+            </div>
+            <div class="col-auto">
+                <div class="text-center">
+                    <a href="/download/{{ filename }}" class="btn btn-success">下載檔案</a>
+                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirm-box">刪除紀錄</button>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-center py-3">
+                <h6>{{ filename }}</h6>
+            </div>
+        </div>
+        <div class="overflow-auto">
+            {{ table|safe }}
+        </div>
+    </div>
+    <div class="modal fade" id="confirm-box">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">刪除確認</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>確定要刪除 {{ filename }} 嗎?</p>
+                    <p>此動作無法復原。</p>
+                </div>
+                <div class="modal-footer">
+                    <a href="/delete/{{ filename }}" class="btn btn-danger">刪除紀錄</a>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock %}

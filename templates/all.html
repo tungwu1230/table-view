@@ -1,0 +1,104 @@
+
+{% extends "base.html" %}
+
+{% block title %}Table View{% endblock %}
+
+{% block style %}
+<style>
+    .overflow-scroll::-webkit-scrollbar {
+        display: none;
+    }
+
+    .overflow-scroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    th, td {
+        width: auto;
+        text-align: center;
+        white-space: nowrap;
+    }
+</style>
+{% endblock %}
+
+{% block main %}
+
+<main class="py-3 d-flex flex-grow-1">
+    <div class="container">
+        <div class="d-flex my-3">
+            <h3 class="flex-grow-1">
+                <span class="text-light bg-success rounded py-2 px-3">檔案列表</span>
+            </h3>
+        </div>
+        
+        <div class="overflow-auto">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>檔案名稱</th>
+                        <th>預覽</th>
+                        <th>下載</th>
+                        <th>刪除</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for filename in filenames %}
+                        <tr>
+                            <td>
+                                {{ filename }}
+                            </td>
+                            <td>
+                                <a href="/preview/{{ filename }}" class="btn btn-success">預覽</a>
+                            </td>
+                            <td>
+                                <a href="/download/{{ filename }}" class="btn btn-success">下載</a>
+                            </td>
+                            <td>
+                                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirm-box" data-bs-filename="{{ filename }}">刪除</button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="modal fade" id="confirm-box">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">刪除確認</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>確定要刪除 <span id="filename"></span> 嗎?</p>
+                            <p>此動作無法復原。</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="/delete/{{ filename }}" class="btn btn-danger">刪除紀錄</a>
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">取消</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+                var confirmBox = document.getElementById('confirm-box')
+                confirmBox.addEventListener('show.bs.modal', function (event) {
+                    // Button that triggered the modal
+                    var button = event.relatedTarget
+                    // Extract info from data-bs-* attributes
+                    var filename = button.getAttribute('data-bs-filename')
+                    // If necessary, you could initiate an AJAX request here
+                    // and then do the updating in a callback.
+                    //
+                    // Update the modal's content.
+                    var modalFilename = confirmBox.querySelector('#filename')
+                    var modalDeleteBtn = confirmBox.querySelector('.btn-danger')
+
+                    modalFilename.textContent = filename
+                    modalDeleteBtn.href = '/delete/' + filename
+                })
+            </script>
+        </div>
+    </div>
+</main>
+
+{% endblock %}

@@ -1,0 +1,46 @@
+
+{% extends "base.html" %}
+
+{% block title %}版本更新說明 - Table View{% endblock %}
+
+{% block style %}
+
+{% endblock %}
+
+{% block main %}
+
+<main class="py-3 d-flex flex-grow-1">
+    <div class="container">
+        <h3 class="my-3">
+            <span class="text-light bg-success rounded py-2 px-3">版本更新說明</span>
+        </h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>版本號</th>
+                    <th>說明</th>
+                    <th>更新日期</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1.1.1</td>
+                    <td>預覽資料顯示資料原貌, 空值不使用NaN顯示</td>
+                    <td>2022-03-27</td>
+                </tr>
+                <tr>
+                    <td>1.1.0</td>
+                    <td>新增上傳檔案功能</td>
+                    <td>2022-03-27</td>
+                </tr>
+                <tr>
+                    <td>1.0.0</td>
+                    <td>支援utf-8格式的csv、xlsx檔案</td>
+                    <td>2022-03-27</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+
+{% endblock %}
